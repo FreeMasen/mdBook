@@ -102,6 +102,7 @@ extern crate shlex;
 extern crate tempfile;
 extern crate toml;
 extern crate toml_query;
+extern crate mdbook_core;
 
 #[cfg(test)]
 #[macro_use]
@@ -120,7 +121,7 @@ pub mod utils;
 /// compatibility checks.
 pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
 
-pub use book::BookItem;
+pub use mdbook_core::BookItem;
 pub use book::MDBook;
 pub use config::Config;
 pub use renderer::Renderer;

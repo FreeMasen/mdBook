@@ -9,7 +9,7 @@ use self::elasticlunr::Index;
 use pulldown_cmark::*;
 use serde_json;
 
-use book::{Book, BookItem};
+use mdbook_core::{Book, BookItem};
 use config::Search;
 use errors::*;
 use theme::searcher;

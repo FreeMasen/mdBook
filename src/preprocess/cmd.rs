@@ -1,5 +1,5 @@
 use super::{Preprocessor, PreprocessorContext};
-use book::Book;
+use mdbook_core::Book;
 use errors::*;
 use serde_json;
 use shlex::Shlex;

@@ -9,9 +9,9 @@ mod book;
 mod init;
 mod summary;
 
-pub use self::book::{load_book, Book, BookItem, BookItems, Chapter};
+pub use self::book::{load_book};
 pub use self::init::BookBuilder;
-pub use self::summary::{parse_summary, Link, SectionNumber, Summary, SummaryItem};
+pub use self::summary::{parse_summary, Link, Summary, SummaryItem};
 
 use std::io::Write;
 use std::path::PathBuf;
@@ -27,6 +27,11 @@ use renderer::{CmdRenderer, HtmlHandlebars, RenderContext, Renderer};
 use utils;
 
 use config::Config;
+use mdbook_core::{
+    Book,
+    BookItem,
+    BookItems,
+};
 
 /// The object used to manage and build a book.
 pub struct MDBook {

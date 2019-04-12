@@ -1,0 +1,10 @@
+[package]
+name = "mdbook-preprocessor"
+version = "0.1.0"
+authors = ["rfm <r@robertmasen.pizza>"]
+edition = "2018"
+
+[dependencies]
+mdbook-core = { path = "../mdbook-core" }
+serde = "1"
+serde_derive = "1"

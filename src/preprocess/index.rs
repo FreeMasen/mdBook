@@ -4,7 +4,7 @@ use std::path::Path;
 use errors::*;
 
 use super::{Preprocessor, PreprocessorContext};
-use book::{Book, BookItem};
+use mdbook_core::{Book, BookItem};
 
 /// A preprocessor for converting file name `README.md` to `index.md` since
 /// `README.md` is the de facto index file in markdown-based documentation.

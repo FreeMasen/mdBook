@@ -1,9 +1,9 @@
 use errors::*;
 use memchr::{self, Memchr};
 use pulldown_cmark::{self, Event, Tag};
-use std::fmt::{self, Display, Formatter};
-use std::iter::FromIterator;
-use std::ops::{Deref, DerefMut};
+use std::fmt::Display;
+use mdbook_core::SectionNumber;
+
 use std::path::{Path, PathBuf};
 
 /// Parse the text from a `SUMMARY.md` file into a sort of "recipe" to be
@@ -480,42 +480,6 @@ fn stringify_events(events: Vec<Event>) -> String {
         }).collect()
 }
 
-/// A section number like "1.2.3", basically just a newtype'd `Vec<u32>` with
-/// a pretty `Display` impl.
-#[derive(Debug, PartialEq, Clone, Default, Serialize, Deserialize)]
-pub struct SectionNumber(pub Vec<u32>);
-
-impl Display for SectionNumber {
-    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        if self.0.is_empty() {
-            write!(f, "0")
-        } else {
-            for item in &self.0 {
-                write!(f, "{}.", item)?;
-            }
-            Ok(())
-        }
-    }
-}
-
-impl Deref for SectionNumber {
-    type Target = Vec<u32>;
-    fn deref(&self) -> &Self::Target {
-        &self.0
-    }
-}
-
-impl DerefMut for SectionNumber {
-    fn deref_mut(&mut self) -> &mut Self::Target {
-        &mut self.0
-    }
-}
-
-impl FromIterator<u32> for SectionNumber {
-    fn from_iter<I: IntoIterator<Item = u32>>(it: I) -> Self {
-        SectionNumber(it.into_iter().collect())
-    }
-}
 
 #[cfg(test)]
 mod tests {

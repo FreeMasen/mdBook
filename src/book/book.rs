@@ -1,12 +1,16 @@
-use std::collections::VecDeque;
-use std::fmt::{self, Display, Formatter};
 use std::fs::{self, File};
 use std::io::{Read, Write};
-use std::path::{Path, PathBuf};
+use std::path::{Path};
 
-use super::summary::{parse_summary, Link, SectionNumber, Summary, SummaryItem};
+use super::summary::{parse_summary, Link, Summary, SummaryItem};
 use config::BuildConfig;
 use errors::*;
+
+use mdbook_core::{
+    Book,
+    BookItem,
+    Chapter,
+};
 
 /// Load a book into memory from its `src/` directory.
 pub fn load_book<P: AsRef<Path>>(src_dir: P, cfg: &BuildConfig) -> Result<Book> {
@@ -59,121 +63,7 @@ fn create_missing(src_dir: &Path, summary: &Summary) -> Result<()> {
     Ok(())
 }
 
-/// A dumb tree structure representing a book.
-///
-/// For the moment a book is just a collection of `BookItems` which are
-/// accessible by either iterating (immutably) over the book with [`iter()`], or
-/// recursively applying a closure to each section to mutate the chapters, using
-/// [`for_each_mut()`].
-///
-/// [`iter()`]: #method.iter
-/// [`for_each_mut()`]: #method.for_each_mut
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-pub struct Book {
-    /// The sections in this book.
-    pub sections: Vec<BookItem>,
-    __non_exhaustive: (),
-}
 
-impl Book {
-    /// Create an empty book.
-    pub fn new() -> Self {
-        Default::default()
-    }
-
-    /// Get a depth-first iterator over the items in the book.
-    pub fn iter(&self) -> BookItems {
-        BookItems {
-            items: self.sections.iter().collect(),
-        }
-    }
-
-    /// Recursively apply a closure to each item in the book, allowing you to
-    /// mutate them.
-    ///
-    /// # Note
-    ///
-    /// Unlike the `iter()` method, this requires a closure instead of returning
-    /// an iterator. This is because using iterators can possibly allow you
-    /// to have iterator invalidation errors.
-    pub fn for_each_mut<F>(&mut self, mut func: F)
-    where
-        F: FnMut(&mut BookItem),
-    {
-        for_each_mut(&mut func, &mut self.sections);
-    }
-
-    /// Append a `BookItem` to the `Book`.
-    pub fn push_item<I: Into<BookItem>>(&mut self, item: I) -> &mut Self {
-        self.sections.push(item.into());
-        self
-    }
-}
-
-pub fn for_each_mut<'a, F, I>(func: &mut F, items: I)
-where
-    F: FnMut(&mut BookItem),
-    I: IntoIterator<Item = &'a mut BookItem>,
-{
-    for item in items {
-        if let &mut BookItem::Chapter(ref mut ch) = item {
-            for_each_mut(func, &mut ch.sub_items);
-        }
-
-        func(item);
-    }
-}
-
-/// Enum representing any type of item which can be added to a book.
-#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub enum BookItem {
-    /// A nested chapter.
-    Chapter(Chapter),
-    /// A section separator.
-    Separator,
-}
-
-impl From<Chapter> for BookItem {
-    fn from(other: Chapter) -> BookItem {
-        BookItem::Chapter(other)
-    }
-}
-
-/// The representation of a "chapter", usually mapping to a single file on
-/// disk however it may contain multiple sub-chapters.
-#[derive(Debug, Clone, Default, PartialEq, Serialize, Deserialize)]
-pub struct Chapter {
-    /// The chapter's name.
-    pub name: String,
-    /// The chapter's contents.
-    pub content: String,
-    /// The chapter's section number, if it has one.
-    pub number: Option<SectionNumber>,
-    /// Nested items.
-    pub sub_items: Vec<BookItem>,
-    /// The chapter's location, relative to the `SUMMARY.md` file.
-    pub path: PathBuf,
-    /// An ordered list of the names of each chapter above this one, in the hierarchy.
-    pub parent_names: Vec<String>,
-}
-
-impl Chapter {
-    /// Create a new chapter with the provided content.
-    pub fn new<P: Into<PathBuf>>(
-        name: &str,
-        content: String,
-        path: P,
-        parent_names: Vec<String>,
-    ) -> Chapter {
-        Chapter {
-            name: name.to_string(),
-            content,
-            path: path.into(),
-            parent_names,
-            ..Default::default()
-        }
-    }
-}
 
 /// Use the provided `Summary` to load a `Book` from disk.
 ///
@@ -196,10 +86,7 @@ fn load_book_from_disk<P: AsRef<Path>>(summary: &Summary, src_dir: P) -> Result<
         chapters.push(chapter);
     }
 
-    Ok(Book {
-        sections: chapters,
-        __non_exhaustive: (),
-    })
+    Ok(Book::with_chapters(chapters))
 }
 
 fn load_summary_item<P: AsRef<Path>>(
@@ -254,45 +141,6 @@ fn load_chapter<P: AsRef<Path>>(
     ch.sub_items = sub_items;
 
     Ok(ch)
-}
-
-/// A depth-first iterator over the items in a book.
-///
-/// # Note
-///
-/// This struct shouldn't be created directly, instead prefer the
-/// [`Book::iter()`] method.
-///
-/// [`Book::iter()`]: struct.Book.html#method.iter
-pub struct BookItems<'a> {
-    items: VecDeque<&'a BookItem>,
-}
-
-impl<'a> Iterator for BookItems<'a> {
-    type Item = &'a BookItem;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        let item = self.items.pop_front();
-
-        if let Some(&BookItem::Chapter(ref ch)) = item {
-            // if we wanted a breadth-first iterator we'd `extend()` here
-            for sub_item in ch.sub_items.iter().rev() {
-                self.items.push_front(sub_item);
-            }
-        }
-
-        item
-    }
-}
-
-impl Display for Chapter {
-    fn fmt(&self, f: &mut Formatter) -> fmt::Result {
-        if let Some(ref section_number) = self.number {
-            write!(f, "{} ", section_number)?;
-        }
-
-        write!(f, "{}", self.name)
-    }
 }
 
 #[cfg(test)]

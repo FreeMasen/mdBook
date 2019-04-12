@@ -22,7 +22,7 @@ use std::io::{self, Read};
 use std::path::PathBuf;
 use std::process::{Command, Stdio};
 
-use book::Book;
+use mdbook_core::Book;
 use config::Config;
 use errors::*;
 

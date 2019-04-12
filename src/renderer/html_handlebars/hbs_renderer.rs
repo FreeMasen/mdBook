@@ -1,4 +1,4 @@
-use book::{Book, BookItem};
+
 use config::{Config, HtmlConfig, Playpen};
 use errors::*;
 use renderer::html_handlebars::helpers;
@@ -14,6 +14,10 @@ use std::path::{Path, PathBuf};
 use handlebars::Handlebars;
 use regex::{Captures, Regex};
 use serde_json;
+use mdbook_core::{
+    Book,
+    BookItem,
+};
 
 #[derive(Default)]
 pub struct HtmlHandlebars;

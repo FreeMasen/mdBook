@@ -17,7 +17,7 @@ exclude = ["book-example/*"]
 [dependencies]
 clap = "2.24"
 chrono = "0.4"
-handlebars = "1.0"
+
 serde = "1.0"
 serde_derive = "1.0"
 error-chain = "0.12"
@@ -30,7 +30,6 @@ toml = "0.4.8"
 memchr = "2.0"
 open = "1.1"
 regex = "1.0.0"
-tempfile = "3.0"
 itertools = "0.7"
 shlex = "0.1"
 toml-query = "0.7"
@@ -47,16 +46,27 @@ ws = { version = "0.7", optional = true}
 elasticlunr-rs = { version = "2.3", optional = true, default-features = false }
 ammonia = { version = "1.1", optional = true }
 
+# Output Feature
+tempfile = { version = "3.0", optional = true }
+walkdir = { version = "2.0", optional = true }
+
+mdbook-core = { path = "./crates/mdbook-core" }
+mdbook-preprocessor = { path = "./crates/mdbook-preprocessor" }
+
+[dependencies.handlebars]
+version = "1.0" 
+default-features = false
+features = ["no_dir_source"]
+
 [dev-dependencies]
 select = "0.4"
 pretty_assertions = "0.5"
-walkdir = "2.0"
 pulldown-cmark-to-cmark = "1.1.0"
 
 [features]
 default = ["output", "watch", "serve", "search"]
 debug = []
-output = []
+output = ["tempfile", "walkdir"]
 watch = ["notify"]
 serve = ["iron", "staticfile", "ws"]
 search = ["elasticlunr-rs", "ammonia"]
@@ -64,3 +74,10 @@ search = ["elasticlunr-rs", "ammonia"]
 [[bin]]
 doc = false
 name = "mdbook"
+
+
+[workspace]
+members = [
+    "./crates/mdbook-core", 
+    "./crates/mdbook-preprocessor",  
+]
