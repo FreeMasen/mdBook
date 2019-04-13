@@ -12,3 +12,5 @@ serde_json = "1"
 log = "0.4"
 shlex = "0.1"
 error-chain = "0.12"
+wasmer-runtime = "0.3"
+bincode = { version = "1", default-features = false, features = [] }

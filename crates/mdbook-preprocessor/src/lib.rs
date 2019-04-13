@@ -6,9 +6,24 @@ use mdbook_core::{book::Book, config::Config, errors::*, MDBOOK_VERSION};
 use std::path::PathBuf;
 #[macro_use]
 extern crate error_chain;
+extern crate wasmer_runtime;
+extern crate bincode;
 
 pub use mdbook_core;
 pub mod cmd;
+pub mod wasm;
+
+pub mod prelude {
+    pub use crate::Preprocessor;
+    pub use crate::PreprocessorContext;
+    pub use crate::cmd::CmdPreprocessor;
+    pub use mdbook_core::{
+        book::*,
+        errors::*,
+        config::*,
+    };
+
+}
 /// Extra information for a `Preprocessor` to give them more context when
 /// processing a book.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
