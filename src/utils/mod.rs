@@ -2,7 +2,7 @@
 
 pub mod fs;
 mod string;
-use errors::Error;
+use mdbook_core::errors::Error;
 use regex::Regex;
 
 use pulldown_cmark::{

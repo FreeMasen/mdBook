@@ -1,8 +1,8 @@
 
-use config::{Config, HtmlConfig, Playpen};
-use errors::*;
+use mdbook_core::config::{Config, HtmlConfig, Playpen};
+use mdbook_core::errors::*;
 use renderer::html_handlebars::helpers;
-use renderer::{RenderContext, Renderer};
+use mdbook_renderer::{RenderContext, Renderer};
 use theme::{self, playpen_editor, Theme};
 use utils;
 
@@ -14,7 +14,7 @@ use std::path::{Path, PathBuf};
 use handlebars::Handlebars;
 use regex::{Captures, Regex};
 use serde_json;
-use mdbook_core::{
+use mdbook_core::book::{
     Book,
     BookItem,
 };

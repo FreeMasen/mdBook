@@ -7,6 +7,7 @@ extern crate error_chain;
 extern crate log;
 extern crate mdbook;
 extern crate open;
+extern crate mdbook_core;
 
 use chrono::Local;
 use clap::{App, AppSettings, ArgMatches};

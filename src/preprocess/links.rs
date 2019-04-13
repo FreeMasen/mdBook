@@ -1,12 +1,18 @@
-use errors::*;
+use mdbook_core::{
+    errors::*,
+    book::Book,
+};
+use mdbook_preprocessor::{
+    Preprocessor, 
+    PreprocessorContext,
+};
 use regex::{CaptureMatches, Captures, Regex};
 use std::ops::{Range, RangeFrom, RangeFull, RangeTo};
 use std::path::{Path, PathBuf};
 use utils::fs::file_to_string;
 use utils::take_lines;
 
-use super::{Preprocessor, PreprocessorContext};
-use mdbook_core::{Book, BookItem};
+use mdbook_core::book::{BookItem};
 
 const ESCAPE_CHAR: char = '\\';
 const MAX_LINK_NESTED_DEPTH: usize = 10;

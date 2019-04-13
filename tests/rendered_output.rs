@@ -4,13 +4,14 @@ extern crate pretty_assertions;
 extern crate select;
 extern crate tempfile;
 extern crate walkdir;
+extern crate mdbook_core;
 
 mod dummy_book;
 
 use dummy_book::{assert_contains_strings, assert_doesnt_contain_strings, DummyBook};
 
-use mdbook::config::Config;
-use mdbook::errors::*;
+use mdbook_core::config::Config;
+use mdbook_core::errors::*;
 use mdbook::utils::fs::{file_to_string, write_file};
 use mdbook::MDBook;
 use select::document::Document;

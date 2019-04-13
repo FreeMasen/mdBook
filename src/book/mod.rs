@@ -19,18 +19,29 @@ use std::process::Command;
 use tempfile::Builder as TempFileBuilder;
 use toml::Value;
 
-use errors::*;
+use mdbook_core::errors::*;
 use preprocess::{
-    CmdPreprocessor, IndexPreprocessor, LinkPreprocessor, Preprocessor, PreprocessorContext,
+     IndexPreprocessor, 
+     LinkPreprocessor,
 };
-use renderer::{CmdRenderer, HtmlHandlebars, RenderContext, Renderer};
+
+use renderer::{HtmlHandlebars};
+use mdbook_renderer::{CmdRenderer, RenderContext, Renderer};
 use utils;
 
-use config::Config;
 use mdbook_core::{
-    Book,
-    BookItem,
-    BookItems,
+    book::{
+        Book,
+        BookItem,
+        BookItems,
+    },
+    config::Config,
+};
+
+use mdbook_preprocessor::{
+    cmd::CmdPreprocessor,
+    Preprocessor, 
+    PreprocessorContext,
 };
 
 /// The object used to manage and build a book.
@@ -106,8 +117,9 @@ impl MDBook {
     ///
     /// ```no_run
     /// # extern crate mdbook;
+    /// # extern crate mdbook_core;
     /// # use mdbook::MDBook;
-    /// # use mdbook::book::BookItem;
+    /// # use mdbook_core::book::BookItem;
     /// # #[allow(unused_variables)]
     /// # fn main() {
     /// # let book = MDBook::load("mybook").unwrap();

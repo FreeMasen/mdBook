@@ -28,8 +28,9 @@
 //! the `MDBook::init()` method.
 //!
 //! ```rust,no_run
+//! extern crate mdbook_core;
 //! use mdbook::MDBook;
-//! use mdbook::config::Config;
+//! use mdbook_core::config::Config;
 //!
 //! let root_dir = "/path/to/book/root";
 //!
@@ -79,7 +80,6 @@
 //! [`RenderContext`]: renderer/struct.RenderContext.html
 //! [relevant chapter]: https://rust-lang-nursery.github.io/mdBook/for_developers/backends.html
 //! [`Config`]: config/struct.Config.html
-
 #![deny(missing_docs)]
 
 #[macro_use]
@@ -103,71 +103,22 @@ extern crate tempfile;
 extern crate toml;
 extern crate toml_query;
 extern crate mdbook_core;
+extern crate mdbook_preprocessor;
+extern crate mdbook_renderer;
 
 #[cfg(test)]
 #[macro_use]
 extern crate pretty_assertions;
 
 pub mod book;
-pub mod config;
-pub mod preprocess;
 pub mod renderer;
 pub mod theme;
 pub mod utils;
+pub mod preprocess;
 
-/// The current version of `mdbook`.
-///
-/// This is provided as a way for custom preprocessors and renderers to do
-/// compatibility checks.
-pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");
-
-pub use mdbook_core::BookItem;
+pub use mdbook_core::{
+    book::BookItem,
+    config::Config,
+};
 pub use book::MDBook;
-pub use config::Config;
-pub use renderer::Renderer;
-
-/// The error types used through out this crate.
-pub mod errors {
-    use std::path::PathBuf;
-
-    error_chain!{
-        foreign_links {
-            Io(::std::io::Error) #[doc = "A wrapper around `std::io::Error`"];
-            HandlebarsRender(::handlebars::RenderError) #[doc = "Handlebars rendering failed"];
-            HandlebarsTemplate(Box<::handlebars::TemplateError>) #[doc = "Unable to parse the template"];
-            Utf8(::std::string::FromUtf8Error) #[doc = "Invalid UTF-8"];
-            SerdeJson(::serde_json::Error) #[doc = "JSON conversion failed"];
-        }
-
-        links {
-            TomlQuery(::toml_query::error::Error, ::toml_query::error::ErrorKind) #[doc = "A TomlQuery error"];
-        }
-
-        errors {
-            /// A subprocess exited with an unsuccessful return code.
-            Subprocess(message: String, output: ::std::process::Output) {
-                description("A subprocess failed")
-                display("{}: {}", message, String::from_utf8_lossy(&output.stdout))
-            }
-
-            /// An error was encountered while parsing the `SUMMARY.md` file.
-            ParseError(line: usize, col: usize, message: String) {
-                description("A SUMMARY.md parsing error")
-                display("Error at line {}, column {}: {}", line, col, message)
-            }
-
-            /// The user tried to use a reserved filename.
-            ReservedFilenameError(filename: PathBuf) {
-                description("Reserved Filename")
-                display("{} is reserved for internal use", filename.display())
-            }
-        }
-    }
-
-    // Box to halve the size of Error
-    impl From<::handlebars::TemplateError> for Error {
-        fn from(e: ::handlebars::TemplateError) -> Error {
-            From::from(Box::new(e))
-        }
-    }
-}
+pub use mdbook_renderer::Renderer;

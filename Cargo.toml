@@ -52,6 +52,7 @@ walkdir = { version = "2.0", optional = true }
 
 mdbook-core = { path = "./crates/mdbook-core" }
 mdbook-preprocessor = { path = "./crates/mdbook-preprocessor" }
+mdbook-renderer = { path = "./crates/mdbook-renderer" }
 
 [dependencies.handlebars]
 version = "1.0" 
@@ -80,4 +81,5 @@ name = "mdbook"
 members = [
     "./crates/mdbook-core", 
     "./crates/mdbook-preprocessor",  
+    "./crates/mdbook-renderer",
 ]

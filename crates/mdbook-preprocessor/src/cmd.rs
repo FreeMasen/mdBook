@@ -1,6 +1,6 @@
 use super::{Preprocessor, PreprocessorContext};
-use mdbook_core::Book;
-use errors::*;
+use mdbook_core::book::Book;
+use mdbook_core::errors::*;
 use serde_json;
 use shlex::Shlex;
 use std::io::{self, Read, Write};

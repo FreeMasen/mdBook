@@ -2,7 +2,7 @@ extern crate notify;
 
 use self::notify::Watcher;
 use clap::{App, ArgMatches, SubCommand};
-use mdbook::errors::Result;
+use mdbook_core::errors::Result;
 use mdbook::utils;
 use mdbook::MDBook;
 use std::path::Path;

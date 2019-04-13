@@ -1,8 +1,8 @@
-use errors::*;
+use mdbook_core::errors::*;
 use memchr::{self, Memchr};
 use pulldown_cmark::{self, Event, Tag};
 use std::fmt::Display;
-use mdbook_core::SectionNumber;
+use mdbook_core::book::SectionNumber;
 
 use std::path::{Path, PathBuf};
 

@@ -1,7 +1,8 @@
 extern crate mdbook;
 extern crate tempfile;
+extern crate mdbook_core;
 
-use mdbook::config::Config;
+use mdbook_core::config::Config;
 use mdbook::MDBook;
 use std::fs;
 use std::path::PathBuf;

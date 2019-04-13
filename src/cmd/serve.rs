@@ -8,7 +8,7 @@ use self::iron::{
 #[cfg(feature = "watch")]
 use super::watch;
 use clap::{App, Arg, ArgMatches, SubCommand};
-use mdbook::errors::*;
+use mdbook_core::errors::*;
 use mdbook::utils;
 use mdbook::MDBook;
 use std;

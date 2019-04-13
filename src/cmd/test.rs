@@ -1,6 +1,6 @@
 use clap::{App, Arg, ArgMatches, SubCommand};
 use get_book_dir;
-use mdbook::errors::Result;
+use mdbook_core::errors::Result;
 use mdbook::MDBook;
 
 // Create clap subcommand arguments

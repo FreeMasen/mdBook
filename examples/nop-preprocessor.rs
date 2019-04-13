@@ -1,11 +1,13 @@
 extern crate clap;
 extern crate mdbook;
 extern crate serde_json;
+extern crate mdbook_core;
+extern crate mdbook_preprocessor;
 
 use clap::{App, Arg, ArgMatches, SubCommand};
-use mdbook::book::Book;
-use mdbook::errors::Error;
-use mdbook::preprocess::{CmdPreprocessor, Preprocessor, PreprocessorContext};
+use mdbook_core::book::Book;
+use mdbook_core::errors::Error;
+use mdbook_preprocessor::{cmd::CmdPreprocessor, Preprocessor, PreprocessorContext};
 use nop_lib::Nop;
 use std::io;
 use std::process;
@@ -39,14 +41,14 @@ fn main() {
 fn handle_preprocessing(pre: &dyn Preprocessor) -> Result<(), Error> {
     let (ctx, book) = CmdPreprocessor::parse_input(io::stdin())?;
 
-    if ctx.mdbook_version != mdbook::MDBOOK_VERSION {
+    if ctx.mdbook_version != mdbook_core::MDBOOK_VERSION {
         // We should probably use the `semver` crate to check compatibility
         // here...
         eprintln!(
             "Warning: The {} plugin was built against version {} of mdbook, \
              but we're being called from version {}",
             pre.name(),
-            mdbook::MDBOOK_VERSION,
+            mdbook_core::MDBOOK_VERSION,
             ctx.mdbook_version
         );
     }

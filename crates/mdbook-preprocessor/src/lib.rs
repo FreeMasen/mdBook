@@ -1,6 +1,21 @@
 #[macro_use]
 extern crate serde_derive;
+#[macro_use]
+extern crate log;
 use std::path::PathBuf;
+use mdbook_core::{
+    config::Config, 
+    book::{
+        Book, 
+    },
+    errors::*, 
+    MDBOOK_VERSION,
+};
+#[macro_use]
+extern crate error_chain;
+
+pub use mdbook_core;
+pub mod cmd;
 /// Extra information for a `Preprocessor` to give them more context when
 /// processing a book.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -19,12 +34,12 @@ pub struct PreprocessorContext {
 
 impl PreprocessorContext {
     /// Create a new `PreprocessorContext`.
-    pub(crate) fn new(root: PathBuf, config: Config, renderer: String) -> Self {
+    pub fn new(root: PathBuf, config: Config, renderer: String) -> Self {
         PreprocessorContext {
             root,
             config,
             renderer,
-            mdbook_version: ::MDBOOK_VERSION.to_string(),
+            mdbook_version: MDBOOK_VERSION.to_string(),
             __non_exhaustive: (),
         }
     }

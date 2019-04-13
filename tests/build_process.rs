@@ -1,13 +1,16 @@
 extern crate mdbook;
+extern crate mdbook_core;
+extern crate mdbook_preprocessor;
+extern crate mdbook_renderer;
 
 mod dummy_book;
 
 use dummy_book::DummyBook;
-use mdbook::book::Book;
-use mdbook::config::Config;
-use mdbook::errors::*;
-use mdbook::preprocess::{Preprocessor, PreprocessorContext};
-use mdbook::renderer::{RenderContext, Renderer};
+use mdbook_core::book::Book;
+use mdbook_core::config::Config;
+use mdbook_core::errors::*;
+use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
+use mdbook_renderer::{RenderContext, Renderer};
 use mdbook::MDBook;
 use std::sync::{Arc, Mutex};
 

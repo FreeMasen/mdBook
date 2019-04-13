@@ -1,4 +1,4 @@
-use errors::*;
+use mdbook_core::errors::*;
 use std::fs::{self, File};
 use std::io::{Read, Write};
 use std::path::{Component, Path, PathBuf};

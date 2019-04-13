@@ -1,5 +1,5 @@
 use clap::{App, ArgMatches, SubCommand};
-use mdbook::errors::Result;
+use mdbook_core::errors::Result;
 use mdbook::MDBook;
 use {get_book_dir, open};
 

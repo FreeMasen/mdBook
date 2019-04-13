@@ -2,8 +2,9 @@
 
 extern crate mdbook;
 extern crate tempfile;
-
-use mdbook::config::Config;
+extern crate mdbook_core;
+extern crate mdbook_renderer;
+use mdbook_core::config::Config;
 use mdbook::MDBook;
 #[cfg(not(windows))]
 use std::path::Path;
@@ -52,7 +53,7 @@ fn tee_command<P: AsRef<Path>>(out_file: P) -> String {
 #[test]
 #[cfg(not(windows))]
 fn backends_receive_render_context_via_stdin() {
-    use mdbook::renderer::RenderContext;
+    use mdbook_renderer::RenderContext;
     use std::fs::File;
 
     let temp = TempFileBuilder::new().prefix("output").tempdir().unwrap();

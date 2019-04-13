@@ -1,6 +1,6 @@
 use clap::{App, ArgMatches, SubCommand};
 use get_book_dir;
-use mdbook::errors::*;
+use mdbook_core::errors::*;
 use mdbook::MDBook;
 use std::fs;
 
@@ -20,7 +20,7 @@ pub fn make_subcommand<'a, 'b>() -> App<'a, 'b> {
 }
 
 // Clean command implementation
-pub fn execute(args: &ArgMatches) -> ::mdbook::errors::Result<()> {
+pub fn execute(args: &ArgMatches) -> Result<()> {
     let book_dir = get_book_dir(args);
     let book = MDBook::load(&book_dir)?;
 

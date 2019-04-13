@@ -1,15 +1,16 @@
 use std::fs::{self, File};
 use std::io::{Read, Write};
-use std::path::{Path};
+use std::path::{Path, PathBuf};
 
 use super::summary::{parse_summary, Link, Summary, SummaryItem};
-use config::BuildConfig;
-use errors::*;
+use mdbook_core::config::BuildConfig;
+use mdbook_core::errors::*;
 
-use mdbook_core::{
+use mdbook_core::book::{
     Book,
     BookItem,
     Chapter,
+    SectionNumber,
 };
 
 /// Load a book into memory from its `src/` directory.
@@ -252,15 +253,13 @@ And here is some \
             numbered_chapters: vec![SummaryItem::Link(link)],
             ..Default::default()
         };
-        let should_be = Book {
-            sections: vec![BookItem::Chapter(Chapter {
+        let should_be = Book::with_chapters(
+            vec![BookItem::Chapter(Chapter {
                 name: String::from("Chapter 1"),
                 content: String::from(DUMMY_SRC),
                 path: PathBuf::from("chapter_1.md"),
                 ..Default::default()
-            })],
-            ..Default::default()
-        };
+            })]);
 
         let got = load_book_from_disk(&summary, temp.path()).unwrap();
 
@@ -269,17 +268,15 @@ And here is some \
 
     #[test]
     fn book_iter_iterates_over_sequential_items() {
-        let book = Book {
-            sections: vec![
+        let book = Book::with_chapters(
+            vec![
                 BookItem::Chapter(Chapter {
                     name: String::from("Chapter 1"),
                     content: String::from(DUMMY_SRC),
                     ..Default::default()
                 }),
                 BookItem::Separator,
-            ],
-            ..Default::default()
-        };
+            ]);
 
         let should_be: Vec<_> = book.sections.iter().collect();
 
@@ -290,8 +287,8 @@ And here is some \
 
     #[test]
     fn iterate_over_nested_book_items() {
-        let book = Book {
-            sections: vec![
+        let book = Book::with_chapters(
+            vec![
                 BookItem::Chapter(Chapter {
                     name: String::from("Chapter 1"),
                     content: String::from(DUMMY_SRC),
@@ -315,9 +312,7 @@ And here is some \
                     ],
                 }),
                 BookItem::Separator,
-            ],
-            ..Default::default()
-        };
+            ]);
 
         let got: Vec<_> = book.iter().collect();
 
@@ -341,8 +336,8 @@ And here is some \
 
     #[test]
     fn for_each_mut_visits_all_items() {
-        let mut book = Book {
-            sections: vec![
+        let mut book = Book::with_chapters(
+            vec![
                 BookItem::Chapter(Chapter {
                     name: String::from("Chapter 1"),
                     content: String::from(DUMMY_SRC),
@@ -366,9 +361,7 @@ And here is some \
                     ],
                 }),
                 BookItem::Separator,
-            ],
-            ..Default::default()
-        };
+            ]);
 
         let num_items = book.iter().count();
         let mut visited = 0;

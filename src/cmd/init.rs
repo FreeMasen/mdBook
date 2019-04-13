@@ -1,7 +1,7 @@
 use clap::{App, ArgMatches, SubCommand};
 use get_book_dir;
-use mdbook::config;
-use mdbook::errors::Result;
+use mdbook_core::config::Config;
+use mdbook_core::errors::Result;
 use mdbook::MDBook;
 use std::io;
 use std::io::Write;
@@ -23,7 +23,7 @@ pub fn make_subcommand<'a, 'b>() -> App<'a, 'b> {
 pub fn execute(args: &ArgMatches) -> Result<()> {
     let book_dir = get_book_dir(args);
     let mut builder = MDBook::init(&book_dir);
-    let mut config = config::Config::default();
+    let mut config = Config::default();
 
     // If flag `--theme` is present, copy theme to src
     if args.is_present("theme") {

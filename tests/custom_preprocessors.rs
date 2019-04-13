@@ -1,9 +1,11 @@
 extern crate mdbook;
+extern crate mdbook_preprocessor;
 
 mod dummy_book;
 
 use dummy_book::DummyBook;
-use mdbook::preprocess::{CmdPreprocessor, Preprocessor};
+use mdbook_preprocessor::cmd::CmdPreprocessor;
+use mdbook_preprocessor::Preprocessor;
 use mdbook::MDBook;
 
 fn example() -> CmdPreprocessor {

@@ -4,8 +4,8 @@ use std::path::PathBuf;
 use toml;
 
 use super::MDBook;
-use config::Config;
-use errors::*;
+use mdbook_core::config::Config;
+use mdbook_core::errors::*;
 use theme;
 
 /// A helper for setting up a new book and its directory structure.

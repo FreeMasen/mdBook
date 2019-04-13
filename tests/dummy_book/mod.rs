@@ -6,8 +6,9 @@
 extern crate mdbook;
 extern crate tempfile;
 extern crate walkdir;
+extern crate mdbook_core;
 
-use mdbook::errors::*;
+use self::mdbook_core::errors::*;
 use mdbook::utils::fs::file_to_string;
 use std::fs::{self, File};
 use std::io::{Read, Write};

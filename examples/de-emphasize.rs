@@ -4,10 +4,12 @@
 extern crate mdbook;
 extern crate pulldown_cmark;
 extern crate pulldown_cmark_to_cmark;
+extern crate mdbook_core;
+extern crate mdbook_preprocessor;
 
-use mdbook::book::{Book, BookItem, Chapter};
-use mdbook::errors::{Error, Result};
-use mdbook::preprocess::{Preprocessor, PreprocessorContext};
+use mdbook_core::book::{Book, BookItem, Chapter};
+use mdbook_core::errors::{Error, Result};
+use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
 use pulldown_cmark::{Event, Parser, Tag};
 use pulldown_cmark_to_cmark::fmt::cmark;
 
