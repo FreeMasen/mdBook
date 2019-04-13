@@ -98,27 +98,24 @@ extern crate serde;
 extern crate serde_derive;
 #[macro_use]
 extern crate serde_json;
+extern crate mdbook_core;
+extern crate mdbook_preprocessor;
+extern crate mdbook_renderer;
 extern crate shlex;
 extern crate tempfile;
 extern crate toml;
 extern crate toml_query;
-extern crate mdbook_core;
-extern crate mdbook_preprocessor;
-extern crate mdbook_renderer;
 
 #[cfg(test)]
 #[macro_use]
 extern crate pretty_assertions;
 
 pub mod book;
+pub mod preprocess;
 pub mod renderer;
 pub mod theme;
 pub mod utils;
-pub mod preprocess;
 
-pub use mdbook_core::{
-    book::BookItem,
-    config::Config,
-};
 pub use book::MDBook;
+pub use mdbook_core::{book::BookItem, config::Config};
 pub use mdbook_renderer::Renderer;

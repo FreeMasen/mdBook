@@ -1,8 +1,8 @@
 extern crate clap;
 extern crate mdbook;
-extern crate serde_json;
 extern crate mdbook_core;
 extern crate mdbook_preprocessor;
+extern crate serde_json;
 
 use clap::{App, Arg, ArgMatches, SubCommand};
 use mdbook_core::book::Book;

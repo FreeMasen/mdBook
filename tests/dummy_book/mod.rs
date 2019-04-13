@@ -4,9 +4,9 @@
 // Not all features are used in all test crates, so...
 #![allow(dead_code, unused_variables, unused_imports, unused_extern_crates)]
 extern crate mdbook;
+extern crate mdbook_core;
 extern crate tempfile;
 extern crate walkdir;
-extern crate mdbook_core;
 
 use self::mdbook_core::errors::*;
 use mdbook::utils::fs::file_to_string;

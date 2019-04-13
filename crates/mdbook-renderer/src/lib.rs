@@ -11,23 +11,12 @@ use shlex::Shlex;
 
 use std::{
     fs,
+    io::Read,
     path::PathBuf,
-    process::{
-        Command,
-        Stdio,
-    },
-    io::{
-        Read
-    },
+    process::{Command, Stdio},
 };
 
-use mdbook_core::{
-    book::Book,
-    config::Config,
-    errors::*,
-    MDBOOK_VERSION
-};
-
+use mdbook_core::{book::Book, config::Config, errors::*, MDBOOK_VERSION};
 
 /// An arbitrary `mdbook` backend.
 ///

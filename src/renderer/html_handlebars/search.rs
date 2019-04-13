@@ -9,14 +9,11 @@ use self::elasticlunr::Index;
 use pulldown_cmark::*;
 use serde_json;
 
+use mdbook_core::errors::*;
 use mdbook_core::{
-    book::{
-        Book, 
-        BookItem,
-    },
+    book::{Book, BookItem},
     config::Search,
 };
-use mdbook_core::errors::*;
 use theme::searcher;
 use utils;
 

@@ -1,18 +1,12 @@
-use mdbook_core::{
-    errors::*,
-    book::Book,
-};
-use mdbook_preprocessor::{
-    Preprocessor, 
-    PreprocessorContext,
-};
+use mdbook_core::{book::Book, errors::*};
+use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
 use regex::{CaptureMatches, Captures, Regex};
 use std::ops::{Range, RangeFrom, RangeFull, RangeTo};
 use std::path::{Path, PathBuf};
 use utils::fs::file_to_string;
 use utils::take_lines;
 
-use mdbook_core::book::{BookItem};
+use mdbook_core::book::BookItem;
 
 const ESCAPE_CHAR: char = '\\';
 const MAX_LINK_NESTED_DEPTH: usize = 10;
@@ -149,17 +143,19 @@ fn parse_include_path(path: &str) -> LinkType<'static> {
     match start {
         Some(start) => match end {
             Some(end) => LinkType::IncludeRange(path, Range { start, end }),
-            None => if has_end {
-                LinkType::IncludeRangeFrom(path, RangeFrom { start })
-            } else {
-                LinkType::IncludeRange(
-                    path,
-                    Range {
-                        start,
-                        end: start + 1,
-                    },
-                )
-            },
+            None => {
+                if has_end {
+                    LinkType::IncludeRangeFrom(path, RangeFrom { start })
+                } else {
+                    LinkType::IncludeRange(
+                        path,
+                        Range {
+                            start,
+                            end: start + 1,
+                        },
+                    )
+                }
+            }
         },
         None => match end {
             Some(end) => LinkType::IncludeRangeTo(path, RangeTo { end }),
@@ -310,7 +306,8 @@ fn find_links(contents: &str) -> LinkIter {
             \s+                        # separating whitespace
             ([a-zA-Z0-9\s_.\-:/\\]+)   # link target path and space separated properties
             \s*\}\}                    # whitespace and link closing parens"
-        ).unwrap();
+        )
+        .unwrap();
     }
     LinkIter(RE.captures_iter(contents))
 }

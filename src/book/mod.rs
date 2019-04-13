@@ -9,7 +9,7 @@ mod book;
 mod init;
 mod summary;
 
-pub use self::book::{load_book};
+pub use self::book::load_book;
 pub use self::init::BookBuilder;
 pub use self::summary::{parse_summary, Link, Summary, SummaryItem};
 
@@ -20,29 +20,18 @@ use tempfile::Builder as TempFileBuilder;
 use toml::Value;
 
 use mdbook_core::errors::*;
-use preprocess::{
-     IndexPreprocessor, 
-     LinkPreprocessor,
-};
+use preprocess::{IndexPreprocessor, LinkPreprocessor};
 
-use renderer::{HtmlHandlebars};
 use mdbook_renderer::{CmdRenderer, RenderContext, Renderer};
+use renderer::HtmlHandlebars;
 use utils;
 
 use mdbook_core::{
-    book::{
-        Book,
-        BookItem,
-        BookItems,
-    },
+    book::{Book, BookItem, BookItems},
     config::Config,
 };
 
-use mdbook_preprocessor::{
-    cmd::CmdPreprocessor,
-    Preprocessor, 
-    PreprocessorContext,
-};
+use mdbook_preprocessor::{cmd::CmdPreprocessor, Preprocessor, PreprocessorContext};
 
 /// The object used to manage and build a book.
 pub struct MDBook {

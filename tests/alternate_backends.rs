@@ -1,11 +1,11 @@
 //! Integration tests to make sure alternate backends work.
 
 extern crate mdbook;
-extern crate tempfile;
 extern crate mdbook_core;
 extern crate mdbook_renderer;
-use mdbook_core::config::Config;
+extern crate tempfile;
 use mdbook::MDBook;
+use mdbook_core::config::Config;
 #[cfg(not(windows))]
 use std::path::Path;
 use tempfile::{Builder as TempFileBuilder, TempDir};

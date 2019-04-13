@@ -1,8 +1,8 @@
 use clap::{App, ArgMatches, SubCommand};
 use get_book_dir;
+use mdbook::MDBook;
 use mdbook_core::config::Config;
 use mdbook_core::errors::Result;
-use mdbook::MDBook;
 use std::io;
 use std::io::Write;
 use std::process::Command;
@@ -15,7 +15,8 @@ pub fn make_subcommand<'a, 'b>() -> App<'a, 'b> {
         .arg_from_usage(
             "[dir] 'Directory to create the book in{n}\
              (Defaults to the Current Directory when omitted)'",
-        ).arg_from_usage("--theme 'Copies the default theme into your source folder'")
+        )
+        .arg_from_usage("--theme 'Copies the default theme into your source folder'")
         .arg_from_usage("--force 'Skips confirmation prompts'")
 }
 

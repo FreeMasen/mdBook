@@ -1,7 +1,7 @@
 use clap::{App, Arg, ArgMatches, SubCommand};
 use get_book_dir;
-use mdbook_core::errors::Result;
 use mdbook::MDBook;
+use mdbook_core::errors::Result;
 
 // Create clap subcommand arguments
 pub fn make_subcommand<'a, 'b>() -> App<'a, 'b> {

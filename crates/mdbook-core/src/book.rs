@@ -1,15 +1,9 @@
 use std::{
     collections::VecDeque,
     fmt,
-    fmt::{
-        Display,
-        Formatter,
-    },
+    fmt::{Display, Formatter},
     iter::FromIterator,
-    ops::{
-        Deref,
-        DerefMut
-    },
+    ops::{Deref, DerefMut},
     path::PathBuf,
 };
 /// A dumb tree structure representing a book.

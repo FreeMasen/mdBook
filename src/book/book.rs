@@ -6,12 +6,7 @@ use super::summary::{parse_summary, Link, Summary, SummaryItem};
 use mdbook_core::config::BuildConfig;
 use mdbook_core::errors::*;
 
-use mdbook_core::book::{
-    Book,
-    BookItem,
-    Chapter,
-    SectionNumber,
-};
+use mdbook_core::book::{Book, BookItem, Chapter, SectionNumber};
 
 /// Load a book into memory from its `src/` directory.
 pub fn load_book<P: AsRef<Path>>(src_dir: P, cfg: &BuildConfig) -> Result<Book> {
@@ -63,8 +58,6 @@ fn create_missing(src_dir: &Path, summary: &Summary) -> Result<()> {
 
     Ok(())
 }
-
-
 
 /// Use the provided `Summary` to load a `Book` from disk.
 ///
@@ -253,13 +246,12 @@ And here is some \
             numbered_chapters: vec![SummaryItem::Link(link)],
             ..Default::default()
         };
-        let should_be = Book::with_chapters(
-            vec![BookItem::Chapter(Chapter {
-                name: String::from("Chapter 1"),
-                content: String::from(DUMMY_SRC),
-                path: PathBuf::from("chapter_1.md"),
-                ..Default::default()
-            })]);
+        let should_be = Book::with_chapters(vec![BookItem::Chapter(Chapter {
+            name: String::from("Chapter 1"),
+            content: String::from(DUMMY_SRC),
+            path: PathBuf::from("chapter_1.md"),
+            ..Default::default()
+        })]);
 
         let got = load_book_from_disk(&summary, temp.path()).unwrap();
 
@@ -268,15 +260,14 @@ And here is some \
 
     #[test]
     fn book_iter_iterates_over_sequential_items() {
-        let book = Book::with_chapters(
-            vec![
-                BookItem::Chapter(Chapter {
-                    name: String::from("Chapter 1"),
-                    content: String::from(DUMMY_SRC),
-                    ..Default::default()
-                }),
-                BookItem::Separator,
-            ]);
+        let book = Book::with_chapters(vec![
+            BookItem::Chapter(Chapter {
+                name: String::from("Chapter 1"),
+                content: String::from(DUMMY_SRC),
+                ..Default::default()
+            }),
+            BookItem::Separator,
+        ]);
 
         let should_be: Vec<_> = book.sections.iter().collect();
 
@@ -287,32 +278,31 @@ And here is some \
 
     #[test]
     fn iterate_over_nested_book_items() {
-        let book = Book::with_chapters(
-            vec![
-                BookItem::Chapter(Chapter {
-                    name: String::from("Chapter 1"),
-                    content: String::from(DUMMY_SRC),
-                    number: None,
-                    path: PathBuf::from("Chapter_1/index.md"),
-                    parent_names: Vec::new(),
-                    sub_items: vec![
-                        BookItem::Chapter(Chapter::new(
-                            "Hello World",
-                            String::new(),
-                            "Chapter_1/hello.md",
-                            Vec::new(),
-                        )),
-                        BookItem::Separator,
-                        BookItem::Chapter(Chapter::new(
-                            "Goodbye World",
-                            String::new(),
-                            "Chapter_1/goodbye.md",
-                            Vec::new(),
-                        )),
-                    ],
-                }),
-                BookItem::Separator,
-            ]);
+        let book = Book::with_chapters(vec![
+            BookItem::Chapter(Chapter {
+                name: String::from("Chapter 1"),
+                content: String::from(DUMMY_SRC),
+                number: None,
+                path: PathBuf::from("Chapter_1/index.md"),
+                parent_names: Vec::new(),
+                sub_items: vec![
+                    BookItem::Chapter(Chapter::new(
+                        "Hello World",
+                        String::new(),
+                        "Chapter_1/hello.md",
+                        Vec::new(),
+                    )),
+                    BookItem::Separator,
+                    BookItem::Chapter(Chapter::new(
+                        "Goodbye World",
+                        String::new(),
+                        "Chapter_1/goodbye.md",
+                        Vec::new(),
+                    )),
+                ],
+            }),
+            BookItem::Separator,
+        ]);
 
         let got: Vec<_> = book.iter().collect();
 
@@ -324,7 +314,8 @@ And here is some \
             .filter_map(|i| match *i {
                 BookItem::Chapter(ref ch) => Some(ch.name.clone()),
                 _ => None,
-            }).collect();
+            })
+            .collect();
         let should_be: Vec<_> = vec![
             String::from("Chapter 1"),
             String::from("Hello World"),
@@ -336,32 +327,31 @@ And here is some \
 
     #[test]
     fn for_each_mut_visits_all_items() {
-        let mut book = Book::with_chapters(
-            vec![
-                BookItem::Chapter(Chapter {
-                    name: String::from("Chapter 1"),
-                    content: String::from(DUMMY_SRC),
-                    number: None,
-                    path: PathBuf::from("Chapter_1/index.md"),
-                    parent_names: Vec::new(),
-                    sub_items: vec![
-                        BookItem::Chapter(Chapter::new(
-                            "Hello World",
-                            String::new(),
-                            "Chapter_1/hello.md",
-                            Vec::new(),
-                        )),
-                        BookItem::Separator,
-                        BookItem::Chapter(Chapter::new(
-                            "Goodbye World",
-                            String::new(),
-                            "Chapter_1/goodbye.md",
-                            Vec::new(),
-                        )),
-                    ],
-                }),
-                BookItem::Separator,
-            ]);
+        let mut book = Book::with_chapters(vec![
+            BookItem::Chapter(Chapter {
+                name: String::from("Chapter 1"),
+                content: String::from(DUMMY_SRC),
+                number: None,
+                path: PathBuf::from("Chapter_1/index.md"),
+                parent_names: Vec::new(),
+                sub_items: vec![
+                    BookItem::Chapter(Chapter::new(
+                        "Hello World",
+                        String::new(),
+                        "Chapter_1/hello.md",
+                        Vec::new(),
+                    )),
+                    BookItem::Separator,
+                    BookItem::Chapter(Chapter::new(
+                        "Goodbye World",
+                        String::new(),
+                        "Chapter_1/goodbye.md",
+                        Vec::new(),
+                    )),
+                ],
+            }),
+            BookItem::Separator,
+        ]);
 
         let num_items = book.iter().count();
         let mut visited = 0;

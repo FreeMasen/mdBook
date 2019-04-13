@@ -2,10 +2,10 @@
 //! book.
 
 extern crate mdbook;
-extern crate pulldown_cmark;
-extern crate pulldown_cmark_to_cmark;
 extern crate mdbook_core;
 extern crate mdbook_preprocessor;
+extern crate pulldown_cmark;
+extern crate pulldown_cmark_to_cmark;
 
 use mdbook_core::book::{Book, BookItem, Chapter};
 use mdbook_core::errors::{Error, Result};

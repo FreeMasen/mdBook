@@ -1,19 +1,19 @@
 extern crate mdbook;
 #[macro_use]
 extern crate pretty_assertions;
+extern crate mdbook_core;
 extern crate select;
 extern crate tempfile;
 extern crate walkdir;
-extern crate mdbook_core;
 
 mod dummy_book;
 
 use dummy_book::{assert_contains_strings, assert_doesnt_contain_strings, DummyBook};
 
-use mdbook_core::config::Config;
-use mdbook_core::errors::*;
 use mdbook::utils::fs::{file_to_string, write_file};
 use mdbook::MDBook;
+use mdbook_core::config::Config;
+use mdbook_core::errors::*;
 use select::document::Document;
 use select::predicate::{Class, Name, Predicate};
 use std::ffi::OsStr;
@@ -31,8 +31,12 @@ const TOC_TOP_LEVEL: &[&'static str] = &[
     "Dummy Book",
     "Introduction",
 ];
-const TOC_SECOND_LEVEL: &[&'static str] =
-    &["1.1. Nested Chapter", "1.2. Includes", "2.1. Nested Chapter", "1.3. Recursive"];
+const TOC_SECOND_LEVEL: &[&'static str] = &[
+    "1.1. Nested Chapter",
+    "1.2. Includes",
+    "2.1. Nested Chapter",
+    "1.3. Recursive",
+];
 
 /// Make sure you can load the dummy book and build it without panicking.
 #[test]

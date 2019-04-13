@@ -6,12 +6,12 @@ extern crate mdbook_renderer;
 mod dummy_book;
 
 use dummy_book::DummyBook;
+use mdbook::MDBook;
 use mdbook_core::book::Book;
 use mdbook_core::config::Config;
 use mdbook_core::errors::*;
 use mdbook_preprocessor::{Preprocessor, PreprocessorContext};
 use mdbook_renderer::{RenderContext, Renderer};
-use mdbook::MDBook;
 use std::sync::{Arc, Mutex};
 
 struct Spy(Arc<Mutex<Inner>>);

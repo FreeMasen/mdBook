@@ -1,4 +1,4 @@
-#![recursion_limit="128"]
+#![recursion_limit = "128"]
 
 #[macro_use]
 extern crate serde_derive;
@@ -6,15 +6,15 @@ extern crate serde_derive;
 extern crate log;
 #[macro_use]
 extern crate error_chain;
-extern crate toml_query;
 extern crate handlebars;
+extern crate toml_query;
 
-pub mod config;
 pub mod book;
+pub mod config;
 pub mod errors {
     use std::path::PathBuf;
 
-    error_chain!{
+    error_chain! {
         foreign_links {
             Io(::std::io::Error) #[doc = "A wrapper around `std::io::Error`"];
             HandlebarsRender(::handlebars::RenderError) #[doc = "Handlebars rendering failed"];
@@ -55,6 +55,5 @@ pub mod errors {
         }
     }
 }
-
 
 pub const MDBOOK_VERSION: &str = env!("CARGO_PKG_VERSION");

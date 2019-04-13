@@ -2,9 +2,9 @@ extern crate notify;
 
 use self::notify::Watcher;
 use clap::{App, ArgMatches, SubCommand};
-use mdbook_core::errors::Result;
 use mdbook::utils;
 use mdbook::MDBook;
+use mdbook_core::errors::Result;
 use std::path::Path;
 use std::sync::mpsc::channel;
 use std::time::Duration;
@@ -18,10 +18,12 @@ pub fn make_subcommand<'a, 'b>() -> App<'a, 'b> {
             "-d, --dest-dir=[dest-dir] 'Output directory for the book{n}\
              Relative paths are interpreted relative to the book's root directory.{n}\
              If omitted, mdBook uses build.build-dir from book.toml or defaults to `./book`.'",
-        ).arg_from_usage(
+        )
+        .arg_from_usage(
             "[dir] 'Root directory for the book{n}\
              (Defaults to the Current Directory when omitted)'",
-        ).arg_from_usage("-o, --open 'Open the compiled book in a web browser'")
+        )
+        .arg_from_usage("-o, --open 'Open the compiled book in a web browser'")
 }
 
 // Watch command implementation
