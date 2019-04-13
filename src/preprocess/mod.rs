@@ -5,3 +5,4 @@ pub use self::links::LinkPreprocessor;
 
 mod index;
 mod links;
+mod cmd;

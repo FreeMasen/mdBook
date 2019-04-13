@@ -31,7 +31,12 @@ use mdbook_core::{
     config::Config,
 };
 
-use mdbook_preprocessor::{cmd::CmdPreprocessor, Preprocessor, PreprocessorContext};
+use mdbook_preprocessor::{
+    cmd::CmdPreprocessor, 
+    Preprocessor, 
+    PreprocessorContext,
+    wasm::WasmPreprocessor,
+};
 
 /// The object used to manage and build a book.
 pub struct MDBook {
@@ -364,6 +369,9 @@ fn determine_preprocessors(config: &Config) -> Result<Vec<Box<Preprocessor>>> {
 
     if config.build.use_default_preprocessors {
         preprocessors.extend(default_preprocessors());
+    }
+    if config.build.use_wasm_preprocessors {
+        preprocessors.push(WasmPreprocessor);
     }
 
     if let Some(preprocessor_table) = config.get("preprocessor").and_then(|v| v.as_table()) {

@@ -397,6 +397,9 @@ pub struct BuildConfig {
     /// Should the default preprocessors always be used when they are
     /// compatible with the renderer?
     pub use_default_preprocessors: bool,
+    /// Should the build process look for and execute
+    /// web assembly preprocessors
+    pub use_wasm_preprocessors: bool,
 }
 
 impl Default for BuildConfig {
@@ -405,6 +408,7 @@ impl Default for BuildConfig {
             build_dir: PathBuf::from("book"),
             create_missing: true,
             use_default_preprocessors: true,
+            use_wasm_preprocessors: false,
         }
     }
 }
