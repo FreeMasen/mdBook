@@ -1,0 +1,11 @@
+[package]
+name = "mdbook-wasm-preprocess-example"
+version = "0.2.4-alpha.0"
+edition = "2018"
+
+[dependencies]
+wasmer-plugin = { git = "https://github.com/FreeMasen/wasmer-plugin" }
+mdbook-core = { path = "../../crates/mdbook-core" }
+
+[lib]
+crate-type = ["cdylib"]
