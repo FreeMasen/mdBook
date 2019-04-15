@@ -1,12 +1,12 @@
 use std::fs::{self, File};
 use std::io::{Read, Write};
-use std::path::{Path, PathBuf};
+use std::path::{Path};
 
 use super::summary::{parse_summary, Link, Summary, SummaryItem};
 use mdbook_core::config::BuildConfig;
 use mdbook_core::errors::*;
 
-use mdbook_core::book::{Book, BookItem, Chapter, SectionNumber};
+use mdbook_core::book::{Book, BookItem, Chapter};
 
 /// Load a book into memory from its `src/` directory.
 pub fn load_book<P: AsRef<Path>>(src_dir: P, cfg: &BuildConfig) -> Result<Book> {
@@ -142,6 +142,8 @@ mod tests {
     use super::*;
     use std::io::Write;
     use tempfile::{Builder as TempFileBuilder, TempDir};
+    use mdbook_core::book::SectionNumber;
+    use std::path::PathBuf;
 
     const DUMMY_SRC: &'static str = "
 # Dummy Chapter

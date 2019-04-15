@@ -371,7 +371,7 @@ fn determine_preprocessors(config: &Config) -> Result<Vec<Box<Preprocessor>>> {
         preprocessors.extend(default_preprocessors());
     }
     if config.build.use_wasm_preprocessors {
-        preprocessors.push(WasmPreprocessor);
+        preprocessors.push(Box::new(WasmPreprocessor));
     }
 
     if let Some(preprocessor_table) = config.get("preprocessor").and_then(|v| v.as_table()) {

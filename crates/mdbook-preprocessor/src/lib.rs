@@ -2,12 +2,10 @@
 extern crate serde_derive;
 #[macro_use]
 extern crate log;
-use mdbook_core::{book::Book, config::Config, errors::*, MDBOOK_VERSION};
-use std::path::PathBuf;
 #[macro_use]
 extern crate error_chain;
-extern crate wasmer_runtime;
-extern crate bincode;
+use mdbook_core::{book::Book, config::Config, errors::*, MDBOOK_VERSION};
+use std::path::PathBuf;
 
 pub use mdbook_core;
 pub mod cmd;

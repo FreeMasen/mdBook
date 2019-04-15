@@ -82,4 +82,5 @@ members = [
     "./crates/mdbook-core", 
     "./crates/mdbook-preprocessor",  
     "./crates/mdbook-renderer",
+    "./wasm-examples/preprocessor",
 ]
